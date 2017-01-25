@@ -1,0 +1,29 @@
+<ion-view title={{vm.survey.surveyName}} ng-controller="SurveyDetailCtrl as vm">
+    <ion-content class="has-header">
+        <div class="list">
+            <div class="list" ng-repeat="que in vm.survey.questions">
+                <div class="item item-text-wrap item-divider">{{que.question}} </div>
+                <div ng-switch on="que.resType.toLowerCase()">
+                    <div ng-switch-when="stars5">
+                        <div class="item item-text-wrap">
+                            <span uib-rating ng-model="que.response" max="10" read-only="false" on-hover="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></span>
+                            <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar">{{percent}}%</span>
+                        </div>
+                    </div>
+                    <div ng-switch-when="radio">
+                        <div class="item item-text-wrap">{{que.resType}}</div>
+                    </div>
+                    <div ng-switch-when="select">
+                        <div class="item item-text-wrap">{{que.resType}}</div>
+                    </div>
+                    <div ng-switch-when="comment">
+                        <div class="item item-text-wrap">{{que.resType}}</div>
+                    </div>
+                    <div ng-switch-default>
+                        <div class="item item-text-wrap">{{que.resType}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
