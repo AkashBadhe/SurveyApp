@@ -1,19 +1,21 @@
 <ion-view ng-controller="SurveysCtrl as vm">
     <ion-content class="has-header">
         <div class="list">
-            <a class="item item-icon-right" ng-repeat="survey in vm.surveys" ui-sref="app.survey-details(vm.survey.id)">
-                <div class="row">
+            <a class="item item-icon-right" ng-repeat="survey in vm.surveys" href="#/app/surveys/{{survey._id}}">
+                <div class="row" >
                     <div class="col col-75">
-                        {{survey.name}}
+                        <p>{{survey.title}}</p>
+                        <p>{{survey.published | date:'medium'}}</p>
                     </div>
-                    <div class="col" ng-class="{'completed': 'balanced',
-                    							'in progress': 'energized',
-                    							'new': 'positive'}[survey.status.toLowerCase()] ">
+                    <!-- <div class="col" ng-class="{'completed': 'balanced',
+                                                'in progress': 'energized',
+                                                'new': 'positive'}[survey.status.toLowerCase()] ">
                         {{survey.status}}
-                    </div>
+                    </div> -->
+                        
                 </div>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
         </div>
     </ion-content>
-</ion-iew>
+    </ion-iew>

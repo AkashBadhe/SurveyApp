@@ -6,7 +6,7 @@
     function SurveyDetailCtrl($stateParams, $ionicPopup, surveyApi) {
         var vm = this;
         console.log("$stateParams", $stateParams, surveyApi);
-        surveyApi.getSurveyData().then(function(survey) {
+        surveyApi.getSurveyData($stateParams.id).then(function(survey) {
             console.log('survey:', survey);
             vm.survey = survey;
 
@@ -16,5 +16,9 @@
             vm.rating.max = 5;
 
         });
+
+        vm.submit = function(survey){
+            console.log(survey);
+        }
     };
 })();

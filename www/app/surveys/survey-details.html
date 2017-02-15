@@ -1,29 +1,45 @@
-<ion-view title={{vm.survey.surveyName}} ng-controller="SurveyDetailCtrl as vm">
+<ion-view title={{vm.survey.title}} ng-controller="SurveyDetailCtrl as vm">
     <ion-content class="has-header">
         <div class="list">
             <div class="list" ng-repeat="que in vm.survey.questions">
                 <div class="item item-text-wrap item-divider">{{que.question}} </div>
-                <div ng-switch on="que.resType.toLowerCase()">
+                <div ng-switch on="que.response.type.toLowerCase()">
                     <div ng-switch-when="stars5">
                         <div class="item item-text-wrap">
-                            <span uib-rating ng-model="que.response" max="10" read-only="false" on-hover="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></span>
+                            <span uib-rating ng-model="que.response.selected[0]" max="5" read-only="false" on-hover="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></span>
                             <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar">{{percent}}%</span>
                         </div>
                     </div>
+                    <div ng-switch-when="number10">
+                        <div class="item item-text-wrap">
+                            <span uib-rating ng-model="que.response.selected[0]" max="10" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'" aria-labelledby="custom-icons-1"></span> <b>(<i>Rate:</i> {{que.response.selected[0]}})</b>
+                        </div>
+                    </div>
                     <div ng-switch-when="radio">
-                        <div class="item item-text-wrap">{{que.resType}}</div>
+                        <div class="item item-text-wrap">
+                            <ion-list ng-repeat="option in que.response.options">
+                                <ion-radio ng-model="que.response.selected[0]" ng-value="'{{option.id}}'">{{option.title}}</ion-radio>
+                            </ion-list>
+                        </div>
                     </div>
                     <div ng-switch-when="select">
-                        <div class="item item-text-wrap">{{que.resType}}</div>
+                        <div class="item item-text-wrap">
+                            <select ng-model="que.response.selected[0]">
+                                <option ng-repeat="option in que.response.options">{{option.title}}</option>
+                            </select>
+                        </div>
                     </div>
                     <div ng-switch-when="comment">
-                        <div class="item item-text-wrap">{{que.resType}}</div>
+                        <div class="item item-text-wrap">
+                            <textarea ng-model="que.response.selected[0]" placeholder="Comments">{{que.response.selected[0]}}</textarea>
+                        </div>
                     </div>
                     <div ng-switch-default>
-                        <div class="item item-text-wrap">{{que.resType}}</div>
+                        <div class="item item-text-wrap">{{que.response.type}}</div>
                     </div>
                 </div>
             </div>
+            <div><button class="button button-block button-positive" ng-click="vm.submit(vm.survey)">Submit</button></div>
         </div>
     </ion-content>
 </ion-view>
